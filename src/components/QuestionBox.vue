@@ -132,6 +132,9 @@ export default {
 
 <style scoped>
 
+.question-box-container {
+  margin-top: 40px; 
+}
 .list-group {
   margin-bottom : 15px;
 }
