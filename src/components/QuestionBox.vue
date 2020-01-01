@@ -13,6 +13,7 @@
           :key="index"
           @click="selectAnswer(index)"
           :class="answerClass(index)"
+          :disabled="answered === true"
         >
          {{ htmlEscape(answer) }}
         </b-list-group-item>
