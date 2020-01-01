@@ -2,7 +2,7 @@
   <div class="question-box-container">
     <b-jumbotron>
       <template v-slot:lead>
-        {{ currentQuestion.question }}
+        {{ htmlEscape(currentQuestion.question) }}
       </template>
 
       <hr class="my-4">
@@ -14,7 +14,7 @@
           @click="selectAnswer(index)"
           :class="answerClass(index)"
         >
-         {{ answer }}
+         {{ htmlEscape(answer) }}
         </b-list-group-item>
       </b-list-group>
 
@@ -33,6 +33,7 @@
 
 <script>
 import _ from 'lodash'
+import he from 'he'
 
 export default {
   props: {
@@ -46,7 +47,7 @@ export default {
       selectedIndex: null,
       correctIndex: null,
       shuffledAnswer: [],
-      answered: false
+      answered: false,
     }
   },
 
@@ -105,6 +106,11 @@ export default {
       }
 
       return answerClass
+    },
+
+    htmlEscape(str) {
+      let decoded = he.decode(str)
+      return decoded
     }
   },
 
