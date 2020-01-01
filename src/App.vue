@@ -3,6 +3,7 @@
     <Header
       :numCorrect="numCorrect"
       :numTotal="numTotal"
+      :numQuestion="numQuestion"
     />
     <b-container class="bv-example-row">
       <b-row>
@@ -12,6 +13,8 @@
             :currentQuestion="questions[index]"
             :next="next"
             :increment="increment"
+            :numQuestion="numQuestion"
+            :totalQuestion="totalQuestion"
           />
         </b-col>
       </b-row>
@@ -35,13 +38,16 @@ export default {
       questions: [],
       index: 0,
       numCorrect: 0,
-      numTotal : 0
+      numTotal : 0,
+      numQuestion : 1,
+      totalQuestion: 0
     }
   },
 
   methods: {
     next() {
       this.index++
+      this.numQuestion++
     },
 
     increment(isCorrect) {
@@ -54,7 +60,7 @@ export default {
   },
 
   mounted: function() {
-    fetch('https://opentdb.com/api.php?amount=20&category=18&difficulty=easy&type=multiple', {
+    fetch('https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple', {
       method: 'get'
     })
     .then((response) => {
@@ -62,6 +68,7 @@ export default {
     })
     .then((jsonData) => {
       this.questions = jsonData.results
+      this.totalQuestion = this.questions.length
     })
   }
 }

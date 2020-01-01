@@ -2,7 +2,7 @@
   <div class="question-box-container">
     <b-jumbotron>
       <template v-slot:lead>
-        {{ htmlEscape(currentQuestion.question) }}
+        {{ htmlDecode(currentQuestion.question) }}
       </template>
 
       <hr class="my-4">
@@ -15,7 +15,7 @@
           :class="answerClass(index)"
           :disabled="answered === true"
         >
-         {{ htmlEscape(answer) }}
+         {{ htmlDecode(answer) }}
         </b-list-group-item>
       </b-list-group>
 
@@ -26,7 +26,14 @@
        >Submit
       </b-button>
 
-      <b-button @click="next" variant="success" href="#">Next</b-button>
+      <b-button 
+        @click="next" 
+        :disabled="numQuestion === totalQuestion"
+        variant="success" 
+        href="#"
+      >
+        Next
+      </b-button>
 
     </b-jumbotron>
   </div>
@@ -40,7 +47,9 @@ export default {
   props: {
     currentQuestion: Object,
     next: Function,
-    increment: Function
+    increment: Function,
+    numQuestion: Number,
+    totalQuestion: Number
   },
 
   data() {
@@ -109,7 +118,7 @@ export default {
       return answerClass
     },
 
-    htmlEscape(str) {
+    htmlDecode(str) {
       let decoded = he.decode(str)
       return decoded
     }
